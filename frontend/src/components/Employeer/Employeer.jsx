@@ -1,79 +1,121 @@
-import React,{ Fragment, useRef } from 'react'
-import Footer from '../Footer/Footer'
-import emailjs from "@emailjs/browser";
-import styled from "styled-components";
-import { Container, Row, Col } from "reactstrap";
+import React, { Fragment, useState } from 'react';
+import Footer from '../Footer/Footer';
+import styled from 'styled-components';
+import { Container, Row, Col } from 'reactstrap';
 
 const Employeer = () => {
-    const form = useRef();
+  const [formData, setFormData] = useState({
+    company_name: '',
+    hr_name: '',
+    employeer_email: '',
+    employeer_mobile: '',
+    requirement: '',
+    jd: '',
+  });
 
-    const sendEmail = (e) => {
-      e.preventDefault();
-  
-      emailjs
-        .sendForm(
-          // "service_j96cda2",
-          // "template_6o6yf33",
-          // form.current,
-          // "OmTWDTFDzwlm0U7j9"
-        )
-        .then(
-          (result) => {
-            console.log(result.text);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-            alert("Message sent");
-          },
-          (error) => {
-            console.log(error.text);
-            alert("Error:",error.text);
-          }
-        );
-    };
-  
-    return (
-        <Fragment>
-          <Container>
-            <Row>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:5000/api/employeers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit data');
+      }
+
+      alert('Data submitted successfully!');
+      setFormData({
+        company_name: '',
+        hr_name: '',
+        employeer_email: '',
+        employeer_mobile: '',
+        requirement: '',
+        jd: '',
+      });
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Failed to submit data');
+    }
+  };
+
+  return (
+    <Fragment>
+      <Container>
+        <Row>
           <Col lg="5" md="5" className="m-auto">
             <h2>Employeer</h2>
-             <StyledContactForm>
-        <form ref={form} onSubmit={sendEmail}>
-          <label>Company Name</label>
-          <input type="text" name="company_name" required/>
-          <label>HR Name</label>
-          <input type="text" name="hr_name" required />
-          <label>Email</label>
-          <input type="email" name="employeer_email" required/>
-          <label>Mobile</label>
-          <input type="number" name="employeer_mobile" required/>
-          <label>Requirement</label>
-          <input type="text" name="requirement"  />
-          <label>Job Description</label>
-          <textarea name="jd" />
-          <input type="submit" value="Submit" />
-        </form>
-      </StyledContactForm>
-      </Col>
-      </Row>
+            <StyledContactForm>
+              <form onSubmit={handleSubmit}>
+                <label>Company Name</label>
+                <input
+                  type="text"
+                  name="company_name"
+                  value={formData.company_name}
+                  onChange={handleChange}
+                  required
+                />
+                <label>HR Name</label>
+                <input
+                  type="text"
+                  name="hr_name"
+                  value={formData.hr_name}
+                  onChange={handleChange}
+                  required
+                />
+                <label>Email</label>
+                <input
+                  type="email"
+                  name="employeer_email"
+                  value={formData.employeer_email}
+                  onChange={handleChange}
+                  required
+                />
+                <label>Mobile</label>
+                <input
+                  type="number"
+                  name="employeer_mobile"
+                  value={formData.employeer_mobile}
+                  onChange={handleChange}
+                  required
+                />
+                <label>Requirement</label>
+                <input
+                  type="text"
+                  name="requirement"
+                  value={formData.requirement}
+                  onChange={handleChange}
+                />
+                <label>Job Description</label>
+                <textarea
+                  name="jd"
+                  value={formData.jd}
+                  onChange={handleChange}
+                />
+                <input type="submit" value="Submit" />
+              </form>
+            </StyledContactForm>
+          </Col>
+        </Row>
       </Container>
-         <Footer />
-         </Fragment>
-     
-    );
-  };
-  
- 
+      <Footer />
+    </Fragment>
+  );
+};
 
-export default Employeer
-
-
-// npm i @emailjs/browser
-
+export default Employeer;
 
 // Styles
 const StyledContactForm = styled.div`
-
-
   form {
     display: flex;
     align-items: flex-start;
@@ -114,7 +156,7 @@ const StyledContactForm = styled.div`
       margin-top: 1rem;
     }
 
-    input[type="submit"] {
+    input[type='submit'] {
       margin-top: 2rem;
       cursor: pointer;
       background: #24a0ed;

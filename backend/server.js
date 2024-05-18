@@ -1,29 +1,51 @@
-const express = require('express');
+// backend/server.js
+
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+import admissionsRoutes from './routes/admissionRoutes.js';
+import employeersRoutes from './routes/employeers.js';
+import jobseekerRoutes from './routes/jobseekers.js';
+
+dotenv.config();
+
 const app = express();
-const mongoose = require('mongoose');
+const PORT = process.env.PORT || 5000;
 
-//const DB_URL = "mongodb://localhost:27017/octa";
-// you can use one of these if localhost is not working properly.
-//const DB_URL = "mongodb://127.0.0.1:27017/octa";
-const DB_URL = "mongodb+srv://Suresh509:Suresh@509@cluster0.ienzkzj.mongodb.net/mnssolutions?retryWrites=true&w=majority";
-
-//Database connection configuration
-mongoose.connect(DB_URL);
-const conn = mongoose.connection;
-conn.once('open', () => {
-    console.log('successfully connected to database');
-})
-conn.on('error', (err) => {
-    console.log(`failed to connect to database ${err.message}`);
-})
+// Middleware
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// app.use(bodyParser.json());
+app.use(express.json());
+app.use(cors());
 
 
-//server configuration
-const PORT = 8080;
-app.listen(PORT, () => {
-    console.log(`App is listening on Port - ${PORT}`);
+// Ensure uploads directory exists
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir);
+}
+
+// Static files route for uploads
+app.use('/uploads', express.static(uploadsDir));
+// Routes
+app.use('/api/admissions', admissionsRoutes);
+app.use('/api/employeers', employeersRoutes);
+app.use('/api/jobseekers', jobseekerRoutes);
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI);
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => {
+  console.log('Connected to MongoDB');
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
 });
-
-/* Please SubScribe OctaCoder Youtube Channel
-    https://www.youtube.com/@octacoder
- */

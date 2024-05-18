@@ -5,31 +5,6 @@ import styled from "styled-components";
 import { Container, Row, Col } from "reactstrap";
 
 const Admissions = () => {
-    // const form = useRef();
-
-    // const sendEmail = (e) => {
-    //   e.preventDefault();
-  
-    //   emailjs
-    //     .sendForm(
-    //       // "service_j96cda2",
-    //       // "template_6o6yf33",
-    //       // form.current,
-    //       // "OmTWDTFDzwlm0U7j9"
-    //     )
-    //     .then(
-    //       (result) => {
-    //         console.log(result.text);
-
-    //         alert("Message sent");
-    //       },
-    //       (error) => {
-    //         console.log(error.text);
-    //         alert("Error:",error.text);
-    //       }
-    //     );
-    // };
-  
 
   const [formData, setFormData] = useState({
     name: '',
@@ -42,7 +17,7 @@ const Admissions = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/api/users', {
+      const response = await fetch('http://localhost:5000/api/admissions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,7 +29,7 @@ const Admissions = () => {
         throw new Error('Failed to add user');
       }
 
-      alert('User added successfully!');
+      alert('Admission added successfully!');
       setFormData({ name: '', email: '', mobile: '', course: '' });
     } catch (error) {
       console.error('Error:', error);
@@ -74,13 +49,14 @@ const Admissions = () => {
              <StyledContactForm>
         <form  onSubmit={handleSubmit}>
           <label>Name</label>
-          <input type="text" name="user_name" value={formData.name} onChange={handleChange} />
+          <input type="text" name="name" value={formData.name} onChange={handleChange} />
           <label>Email</label>
-          <input type="email" name="user_email" value={formData.email} onChange={handleChange} />
+          <input type="email" name="email" value={formData.email} onChange={handleChange} />
           <label>Mobile</label>
-          <input type="number" name="user_mobile" value={formData.mobile} onChange={handleChange} />
+          <input type="number" name="mobile" value={formData.mobile} onChange={handleChange} />
           <label>Select Course</label>
-          <select name="user_course" value={formData.course} onChange={handleChange}>
+          <select name="course" value={formData.course} onChange={handleChange}>
+            <option value="">Select</option>
             <option value="inter">Intermediate</option>
             <option value="degree">Degree</option>
             <option value="bba">BBA</option>

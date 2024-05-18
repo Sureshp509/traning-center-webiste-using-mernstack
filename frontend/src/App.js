@@ -9,10 +9,16 @@ import Employeer from './components/Employeer/Employeer';
 import Careers from "./pages/Careers";
 import Admissions from "./pages/Admissions";
 import ContactUs from "./pages/ContactUs";
+import AllCourses from './pages/AllCourses';
+import AdmissionData from './pages/AdmissionData';
+import EmployeerList from './pages/EmployeerList';
+import JobseekerList from './pages/JobseekerList';
+
+import Admin from './pages/Admin';
 import logo from './assests/images/logo.png';
 
 import { BrowserRouter,Routes,Route,Link } from 'react-router-dom';
-import AllCourses from './pages/AllCourses';
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -87,6 +93,11 @@ function App() {
     <Route path="/admissions" element={<Admissions />}></Route>
     <Route path="/contactus" element={<ContactUs />}></Route>
     <Route path="/allcourses" element={<AllCourses />}></Route>
+
+    <Route path="/admissiondata" element={<AdmissionData />} />
+    <Route path="/employeerdata" element={<EmployeerList />} />
+    <Route path="/jobseekerdata" element={<JobseekerList />} />
+    <Route path="/admin" element={<Admin />} />
   </Routes>
   </div>
 
