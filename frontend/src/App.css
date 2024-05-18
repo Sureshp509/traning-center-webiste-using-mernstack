@@ -1,0 +1,123 @@
+/* App.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  nav {
+    /* background-color: #333; */
+    padding: 1rem;
+   
+  }
+  
+  nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    padding-top:29px;
+  }
+  
+  nav ul li {
+    position: relative;
+    margin: 0.5rem 0;
+    /* padding-bottom:43px;
+    height:49px; */
+  }
+  
+  nav ul li a,
+  nav ul li button.dropdown-toggle {
+   
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    display: block;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: #0a2b1e;
+    transition: 0.3s;
+    width:122% !important;
+  }
+  
+  nav ul li a:hover,
+nav ul li button.dropdown-toggle:hover {
+    color: #17bf9e;
+}
+
+  nav ul li ul {
+    list-style: none;
+    padding-left: 10px;
+    margin: 0;
+    display: none;
+    background-color: #625c5c;
+    color:#ffffff;
+    
+  }
+  nav ul li ul:hover {
+    color:#737070 !important
+    
+  }
+  
+  nav ul li ul.open {
+    display: block;
+  }
+  
+  nav ul li ul li {
+    margin: 0;
+  }
+  
+  .navbar-toggle {
+    display: none;
+    background-color: #333;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .content {
+    padding: 1rem;
+  }
+  
+  @media (min-width: 600px) {
+    nav {
+      /* background-color: #333; */
+      padding-bottom:0px;
+      display: flex;
+    }
+    nav ul {
+      flex-direction: row;
+    }
+    nav ul li {
+      margin: 0 1rem;
+    }
+    nav ul li ul {
+      position: absolute;
+      left: 0;
+      top: 100%;
+      width: 200px;
+    }
+  }
+  
+  @media (max-width: 599px) {
+    .navbar-toggle {
+      display: block;
+      float:right;
+      margin-top: 100px;
+      width: 55px;
+    }
+    nav ul {
+      display: none;
+      flex-direction: column;
+    }
+    nav ul.open {
+      display: flex;
+    }
+  }
+  
